@@ -1,8 +1,16 @@
-restful-web-services/HELP.md
 target/
 !.mvn/wrapper/maven-wrapper.jar
 !**/src/main/**/target/
 !**/src/test/**/target/
+
+logs
+target
+!**/.bsp
+!**/.idea_modules
+!**/.classpath
+!**/.project
+!**/.settings
+!**/RUNNING_PID
 
 ### STS ###
 .apt_generated
@@ -33,5 +41,3 @@ build/
 .vscode/
 
 node_modules/
-/src/main/resources/assignment/Section03Mono/file_to_write.txt
-/src/main/resources/assignment/Section03Mono/file_to_delete.txt
