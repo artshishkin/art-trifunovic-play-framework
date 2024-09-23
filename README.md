@@ -6,6 +6,7 @@
 ## [Tutorial on Play Framework from Stefan Trifunovic (Udemy)](https://www.udemy.com/course/play-framework2)
 
 ---
+
 ### Section 3: My First WebApp
 
 #### 6. Create Play Project from Template
@@ -19,6 +20,19 @@
 - start app: `sbt run`
 - verify app is running: http://localhost:9000
 
+#### 10. How To Debug?
+
+- `sbt -jvm-debug 9999 run` - debug on port 9999
+- Add Configuration:
+    - Remote JVM Debug
+    - Name: `debug-first-app`
+    - Port: 9999
+    - Use module classpath: `01-my-first-web-app`
+    - Apply, Ok
+- Run `debug-first-app` configuration
+- Set breakpoint to `controllers.HomeController.index()`
+- Visit http://localhost:9000
+- App should be paused in the breakpoint
 
 [licence]: https://img.shields.io/github/license/artshishkin/art-trifunovic-play-framework.svg
 
