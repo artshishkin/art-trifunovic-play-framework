@@ -4,6 +4,7 @@
  * two arguments, a `String` for the title of the page and an `Html`
  * object to insert into the body of the page.
  *@
+@* @this(webJarsUtil: org.webjars.play.WebJarsUtil) - does not work *@
 @(title: String)(content: Html)
 
 <!DOCTYPE html>
@@ -22,8 +23,14 @@
 @*        integrity="sha384-skAcpIdS7UcVUC05LJ9Dxay8AXcDYfBJqt1CJ85S/CFujBsIzCIv+l9liuYLaMQ/" crossorigin="anonymous"></script>*@
 
 @* 2. Second option is to copy bootstrap files to the public folder *@
-        <link rel="stylesheet" href="@routes.Assets.versioned("stylesheets/bootstrap.min.css")"/>
-        <script src="@routes.Assets.versioned("javascripts/bootstrap.min.js")"></script>
+@*        <link rel="stylesheet" href="@routes.Assets.versioned("stylesheets/bootstrap.min.css")"/>*@
+@*        <script src="@routes.Assets.versioned("javascripts/bootstrap.min.js")"></script>*@
+
+@* 3. Third option is to use WebJars *@
+@*            @webJarsUtil.locate("bootstrap.min.css").css()*@
+@*            @webJarsUtil.locate("bootstrap.min.js").script()*@
+        <link rel="stylesheet" href="@routes.Assets.versioned("lib/bootstrap/css/bootstrap.min.css")"/>
+        <script src="@routes.Assets.versioned("lib/bootstrap/js/bootstrap.min.js")"></script>
 
     </head>
     <body>
