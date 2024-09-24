@@ -1,6 +1,10 @@
 package controllers;
 
-import play.mvc.*;
+import play.libs.Json;
+import play.mvc.Controller;
+import play.mvc.Result;
+
+import java.util.Map;
 
 /**
  * This controller contains an action to handle HTTP requests
@@ -16,6 +20,14 @@ public class HomeController extends Controller {
      */
     public Result index() {
         return ok(views.html.index.render());
+    }
+
+    public Result getPosts() {
+        return ok(views.html.posts.render());
+    }
+
+    public Result getPostsJson() {
+        return ok(Json.toJson(Map.of("index", 123, "title", "Post title 1", "athor", "Art")));
     }
 
 }
