@@ -1,9 +1,11 @@
 package controllers;
 
+import model.Post;
 import play.libs.Json;
 import play.mvc.Controller;
 import play.mvc.Result;
 
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -23,7 +25,13 @@ public class HomeController extends Controller {
     }
 
     public Result getPosts() {
-        return ok(views.html.posts.render());
+
+        List<Post> posts = List.of(
+                new Post("title1", "content1"),
+                new Post("title2", "content2")
+        );
+
+        return ok(views.html.posts.render(posts));
     }
 
     public Result getPostsJson() {
