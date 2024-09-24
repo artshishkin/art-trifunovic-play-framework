@@ -2,6 +2,12 @@
 
 @main("Post Page") {
     <h1>My Posts</h1>
+
+    @if(posts.isEmpty){
+        <h3>There are no posts!</h3>
+    }else{
+        <h3>@posts.size() Posts found</h3>
+    }
     <div class="container">
         <h3>@posts.get(0).getTitle</h3>
         <span>@posts.get(0).getContent</span>
