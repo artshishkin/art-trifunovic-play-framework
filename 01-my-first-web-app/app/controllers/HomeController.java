@@ -40,7 +40,7 @@ public class HomeController extends Controller {
         return ok(views.html.index.render());
     }
 
-    public Result getPosts(Integer postId) {
+    public Result getPosts(Integer postId, Http.Request request) {
 
         List<Post> posts;
         if (postId == null) {
@@ -51,7 +51,7 @@ public class HomeController extends Controller {
                     .map(List::of)
                     .orElse(Collections.emptyList());
         }
-        return ok(views.html.posts.render(posts));
+        return ok(views.html.posts.render(posts, request));
     }
 
     public Result getPostsJson() {
