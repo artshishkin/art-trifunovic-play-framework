@@ -18,7 +18,10 @@
                 } else {
                     <h6 style="font-family: fantasy; border-bottom: 1px solid;">@posts.size() Post@{if(posts.size()>1) "s" else ""}  found</h6>
                 }
-                @for(post <- posts){
+                @*
+                * Reusable Code Block inside a For Loop
+                *@
+                @for(post <- posts) {
                     @displayPost(post)
                 }
             </div>
@@ -32,7 +35,8 @@
                     <div class="col-6">
                         <label>Content</label>
                         <input type="text" style="width: 100%">
-                        <button class="btn btn-primary" style="margin-top: 20px; width: 100%">Create</button>
+                        <button class="btn btn-primary" style="margin-top: 20px;
+                            width: 100%">Create</button>
                     </div>
                 </div>
             </div>
