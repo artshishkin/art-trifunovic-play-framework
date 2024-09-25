@@ -4,6 +4,7 @@
  * two arguments, a `String` for the title of the page and an `Html`
  * object to insert into the body of the page.
  *@
+@* @this(webJarsUtil: org.webjars.play.WebJarsUtil) - does not work *@
 @(title: String)(content: Html)
 
 <!DOCTYPE html>
@@ -13,6 +14,24 @@
         <title>@title</title>
         <link rel="stylesheet" media="screen" href="@routes.Assets.versioned("stylesheets/main.css")">
         <link rel="shortcut icon" type="image/png" href="@routes.Assets.versioned("images/favicon.png")">
+
+@* 1. First option to import bootstrap - by CDN *@
+@*        <link rel="stylesheet"*@
+@*        href="https://cdn.jsdelivr.net/npm/bootstrap@@5.1.1/dist/css/bootstrap.min.css"*@
+@*        integrity="sha384-F3w7mX95PdgyTmZZMECAngseQB83DfGTowi0iMjiWaeVhAn4FJkqJByhZMI3AhiU" crossorigin="anonymous" />*@
+@*        <script src="https://cdn.jsdelivr.net/npm/bootstrap@@5.1.1/dist/js/bootstrap.min.js"*@
+@*        integrity="sha384-skAcpIdS7UcVUC05LJ9Dxay8AXcDYfBJqt1CJ85S/CFujBsIzCIv+l9liuYLaMQ/" crossorigin="anonymous"></script>*@
+
+@* 2. Second option is to copy bootstrap files to the public folder *@
+@*        <link rel="stylesheet" href="@routes.Assets.versioned("stylesheets/bootstrap.min.css")"/>*@
+@*        <script src="@routes.Assets.versioned("javascripts/bootstrap.min.js")"></script>*@
+
+@* 3. Third option is to use WebJars *@
+@*            @webJarsUtil.locate("bootstrap.min.css").css()*@
+@*            @webJarsUtil.locate("bootstrap.min.js").script()*@
+        <link rel="stylesheet" href="@routes.Assets.versioned("lib/bootstrap/css/bootstrap.min.css")"/>
+        <script src="@routes.Assets.versioned("lib/bootstrap/js/bootstrap.min.js")"></script>
+
     </head>
     <body>
         @* And here's where we render the `Html` object containing
