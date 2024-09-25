@@ -1,5 +1,12 @@
 @(posts: List[model.Post])
 
+@displayPost(post: model.Post) = {
+    <div class="bg-info text-light" style="margin: 10px">
+        <h3>@post.getTitle</h3>
+        <span>@post.getContent</span>
+    </div>
+}
+
 @main("Post Page") {
     <h1 style="font-family: cursive;">My Posts</h1>
 
@@ -12,10 +19,7 @@
                     <h6 style="font-family: fantasy; border-bottom: 1px solid;">@posts.size() Post@{if(posts.size()>1) "s" else ""}  found</h6>
                 }
                 @for(post <- posts){
-                    <div class="bg-info text-light" style="margin: 10px">
-                        <h3>@post.getTitle</h3>
-                        <span>@post.getContent</span>
-                    </div>
+                    @displayPost(post)
                 }
             </div>
             <div class="col-6" style="border: 2px dotted">
