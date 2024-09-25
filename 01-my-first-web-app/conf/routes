@@ -6,6 +6,9 @@
 GET     /                           controllers.HomeController.index()
 
 GET     /posts                      controllers.HomeController.getPosts(postId: Integer ?= null)
+
++ nocsrf
+POST    /posts                      controllers.HomeController.createPost(request: Request)
 GET     /posts-json                 controllers.HomeController.getPostsJson()
 
 # Map static resources from the /public folder to the /assets URL path

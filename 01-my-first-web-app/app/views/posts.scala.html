@@ -1,3 +1,7 @@
+@* @import form.PostForm *@
+
+@* @(posts: List[model.Post], postForm: Form[PostForm])*@
+
 @(posts: List[model.Post])
 
 @displayPost(post: model.Post) = {
@@ -14,9 +18,13 @@
         <div class="row" style="margin-top: 50px;">
             <div class="col-6">
                 @if(posts.isEmpty) {
-                    <h6 style="font-family: fantasy; border-bottom: 1px solid;">There are no posts!</h6>
+                    <h6 style="font-family: fantasy;
+                        border-bottom: 1px solid;">There are no posts!</h6>
                 } else {
-                    <h6 style="font-family: fantasy; border-bottom: 1px solid;">@posts.size() Post@{if(posts.size()>1) "s" else ""}  found</h6>
+                    <h6 style="font-family: fantasy;
+                        border-bottom: 1px solid;">@posts.size() Post@{
+                        if(posts.size() > 1) "s" else ""
+                    }  found</h6>
                 }
                 @*
                 * Reusable Code Block inside a For Loop
@@ -26,19 +34,22 @@
                 }
             </div>
             <div class="col-6" style="border: 2px dotted">
+            @helper.form(routes.HomeController.createPost) {
+
                 <h4>Create New Post</h4>
                 <div class="row">
                     <div class="col-6">
                         <label>Title</label>
-                        <input type="text" style="width: 100%">
+                        <input name="title" type="text" style="width: 100%">
                     </div>
                     <div class="col-6">
                         <label>Content</label>
-                        <input type="text" style="width: 100%">
-                        <button class="btn btn-primary" style="margin-top: 20px;
+                        <input name="content" type="text" style="width: 100%">
+                        <button type="submit" class="btn btn-primary" style="margin-top: 20px;
                             width: 100%">Create</button>
                     </div>
                 </div>
+            }
             </div>
         </div>
     </div>

@@ -1,5 +1,6 @@
 package service;
 
+import form.PostForm;
 import model.Post;
 
 import java.util.ArrayList;
@@ -25,5 +26,16 @@ public class ListStoragePostService implements PostService {
         return posts.stream()
                 .filter(p -> p.getId() == postId)
                 .findAny();
+    }
+
+    @Override
+    public Post createPost(PostForm postForm) {
+        int maxIdx = posts.stream()
+                .mapToInt(Post::getId)
+                .max()
+                .orElse(0);
+        Post newPost = new Post(maxIdx + 1, postForm.getTitle(), postForm.getContent());
+        posts.add(newPost);
+        return newPost;
     }
 }

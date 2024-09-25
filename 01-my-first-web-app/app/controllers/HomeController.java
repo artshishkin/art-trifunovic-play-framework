@@ -1,9 +1,13 @@
 package controllers;
 
+import form.PostForm;
 import jakarta.inject.Inject;
 import model.Post;
+import play.data.Form;
+import play.data.FormFactory;
 import play.libs.Json;
 import play.mvc.Controller;
+import play.mvc.Http;
 import play.mvc.Result;
 import service.PostService;
 
@@ -18,10 +22,12 @@ import java.util.Map;
 public class HomeController extends Controller {
 
     private final PostService postService;
+    private final FormFactory formFactory;
 
     @Inject
-    public HomeController(PostService postService) {
+    public HomeController(PostService postService, FormFactory formFactory) {
         this.postService = postService;
+        this.formFactory = formFactory;
     }
 
     /**
@@ -52,4 +58,12 @@ public class HomeController extends Controller {
         return ok(Json.toJson(Map.of("index", 123, "title", "Post title 1", "athor", "Art")));
     }
 
+    public Result createPost(Http.Request request) {
+
+        Form<PostForm> boundForm = formFactory.form(PostForm.class).bindFromRequest(request);
+
+        PostForm postData = boundForm.get();
+        postService.createPost(postData);
+        return redirect(routes.HomeController.getPosts(null));
+    }
 }
