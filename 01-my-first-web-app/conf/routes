@@ -5,7 +5,7 @@
 # An example controller showing a sample home page
 GET     /                           controllers.HomeController.index()
 
-GET     /posts                      controllers.HomeController.getPosts()
+GET     /posts                      controllers.HomeController.getPosts(postId: Integer ?= null)
 GET     /posts-json                 controllers.HomeController.getPostsJson()
 
 # Map static resources from the /public folder to the /assets URL path

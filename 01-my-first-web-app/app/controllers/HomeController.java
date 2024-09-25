@@ -1,10 +1,13 @@
 package controllers;
 
+import jakarta.inject.Inject;
 import model.Post;
 import play.libs.Json;
 import play.mvc.Controller;
 import play.mvc.Result;
+import service.PostService;
 
+import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 
@@ -13,6 +16,13 @@ import java.util.Map;
  * to the application's home page.
  */
 public class HomeController extends Controller {
+
+    private final PostService postService;
+
+    @Inject
+    public HomeController(PostService postService) {
+        this.postService = postService;
+    }
 
     /**
      * An action that renders an HTML page with a welcome message.
@@ -24,13 +34,17 @@ public class HomeController extends Controller {
         return ok(views.html.index.render());
     }
 
-    public Result getPosts() {
+    public Result getPosts(Integer postId) {
 
-        List<Post> posts = List.of(
-                new Post("title1", "content1"),
-                new Post("title2", "content2")
-        );
+        List<Post> posts;
+        if (postId == null) {
+            posts = postService.getPosts();
 
+        } else {
+            posts = postService.getPost(postId)
+                    .map(List::of)
+                    .orElse(Collections.emptyList());
+        }
         return ok(views.html.posts.render(posts));
     }
 
