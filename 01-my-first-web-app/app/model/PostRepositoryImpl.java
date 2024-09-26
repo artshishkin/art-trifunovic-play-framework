@@ -29,11 +29,18 @@ public class PostRepositoryImpl implements PostRepository {
 
     @Override
     public Optional<Post> findById(int postId) {
-        return Optional.empty();
+        Post post = jpaApi.withTransaction(em -> {
+            return em.find(Post.class, postId);
+        });
+        return Optional.ofNullable(post);
     }
 
     @Override
     public Post createPost(PostForm postForm) {
-        return null;
+        Post post = new Post(null, postForm.getTitle(), postForm.getContent());
+        jpaApi.withTransaction(em->{
+            em.persist(post);
+        });
+        return post;
     }
 }

@@ -15,7 +15,7 @@ public class Post {
     public Post() {
     }
 
-    public Post(int id, String title, String content) {
+    public Post(Integer id, String title, String content) {
         this.id = id;
         this.title = title;
         this.content = content;
@@ -43,5 +43,14 @@ public class Post {
 
     public void setContent(String content) {
         this.content = content;
+    }
+
+    @Override
+    public String toString() {
+        return "Post{" +
+                "id=" + id +
+                ", title='" + title + '\'' +
+                ", content='" + content + '\'' +
+                '}';
     }
 }

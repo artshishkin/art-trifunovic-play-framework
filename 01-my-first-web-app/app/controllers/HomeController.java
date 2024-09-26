@@ -69,7 +69,7 @@ public class HomeController extends Controller {
         }
 
         PostForm postData = boundForm.get();
-        postService.createPost(postData);
+        Post postCreated = postService.createPost(postData);
         return redirect(routes.HomeController.getPosts(null));
     }
 }
