@@ -42,20 +42,24 @@
                 <div class="row">
                     <div class="col-6">
                         <label>Title</label>
-                        <input name="title" type="text" style="width: 100%">
+                        <input name="title" type="text" style="width: 100%; @{if(postForm("title").hasErrors) " border-color: red;"}" value="@postForm("title").value()">
+                        @if(postForm("title").hasErrors) {
+                            <span class="error">@postForm("title").error.get.message</span>
+                        }
                     </div>
-                    <div class="col-6">
+                    <div class="col-6" >
+
                         <label>Content</label>
-                        <input name="content" type="text" style="width: 100%">
+                        <input name="content" type="text" style="width: 100%; @{if(postForm("content").hasErrors) " border-color: red;"}" value="@postForm("content").value()">
+                        @if(postForm("content").hasErrors) {
+                            <span class="error">@postForm("content").error.get.message</span>
+                        }
                         <button type="submit" class="btn btn-primary" style="margin-top: 20px;
                             width: 100%">Create</button>
                     </div>
                 </div>
             }
                 @if(postForm.hasErrors){
-                    @for(err <- postForm.errors()){
-                        <p style="color: red;">@err.key() - @err.message()</p>
-                    }
                     <p style="color: red;">Invalid request!</p>
                 }
             </div>
