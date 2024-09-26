@@ -51,7 +51,9 @@ public class HomeController extends Controller {
                     .map(List::of)
                     .orElse(Collections.emptyList());
         }
-        return ok(views.html.posts.render(posts, request));
+        return ok(views.html.posts.render(posts,
+                formFactory.form(PostForm.class),
+                request));
     }
 
     public Result getPostsJson() {
@@ -61,6 +63,10 @@ public class HomeController extends Controller {
     public Result createPost(Http.Request request) {
 
         Form<PostForm> boundForm = formFactory.form(PostForm.class).bindFromRequest(request);
+
+        if (boundForm.hasErrors()) {
+            return badRequest(views.html.posts.render(postService.getPosts(), boundForm, request));
+        }
 
         PostForm postData = boundForm.get();
         postService.createPost(postData);

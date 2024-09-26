@@ -1,6 +1,8 @@
+@import form.PostForm
+@import model.Post
 @import play.mvc.Http.Request
 
-@(posts: List[model.Post])(implicit request: Request)
+@(posts: List[Post], postForm: play.data.Form[PostForm])(implicit request: Request)
 
 @displayPost(post: model.Post) = {
     <div class="bg-info text-light" style="margin: 10px">
@@ -50,6 +52,12 @@
                     </div>
                 </div>
             }
+                @if(postForm.hasErrors){
+                    @for(err <- postForm.errors()){
+                        <p style="color: red;">@err.key() - @err.message()</p>
+                    }
+                    <p style="color: red;">Invalid request!</p>
+                }
             </div>
         </div>
     </div>

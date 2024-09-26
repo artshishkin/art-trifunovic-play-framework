@@ -1,8 +1,14 @@
 package form;
 
+import play.data.validation.Constraints;
+
 public class PostForm {
 
+    @Constraints.Required
     private String title;
+
+    @Constraints.Required
+    @Constraints.MaxLength(200)
     private String content;
 
     public String getTitle() {
