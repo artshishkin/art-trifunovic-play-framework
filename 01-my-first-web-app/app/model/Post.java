@@ -1,10 +1,19 @@
 package model;
 
+import jakarta.persistence.*;
+
+@Entity
+@Table(name = "Posts")
 public class Post {
 
-    private int id;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Integer id;
     private String title;
     private String content;
+
+    public Post() {
+    }
 
     public Post(int id, String title, String content) {
         this.id = id;
@@ -22,5 +31,17 @@ public class Post {
 
     public String getContent() {
         return content;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
+    }
+
+    public void setContent(String content) {
+        this.content = content;
     }
 }

@@ -7,7 +7,7 @@ import model.Post;
 import java.util.List;
 import java.util.Optional;
 
-@ImplementedBy(ListStoragePostService.class)
+@ImplementedBy(PersistenceH2PostService.class)
 public interface PostService {
 
     List<Post> getPosts();
