@@ -5,11 +5,12 @@ import form.PostForm;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.concurrent.CompletionStage;
 
 @ImplementedBy(PostRepositoryImpl.class)
 public interface PostRepository {
 
-    List<Post> getAll();
+    CompletionStage<List<Post>> getAll();
 
     Optional<Post> findById(int postId);
 

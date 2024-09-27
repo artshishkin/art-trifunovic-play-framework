@@ -7,6 +7,8 @@ import play.db.jpa.JPAApi;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.concurrent.CompletableFuture;
+import java.util.concurrent.CompletionStage;
 
 public class PostRepositoryImpl implements PostRepository {
 
@@ -20,11 +22,13 @@ public class PostRepositoryImpl implements PostRepository {
     }
 
     @Override
-    public List<Post> getAll() {
-        return jpaApi.withTransaction(em -> {
-            TypedQuery<Post> query = em.createQuery("select p from Post p", Post.class);
-            return query.getResultList();
-        });
+    public CompletionStage<List<Post>> getAll() {
+        return CompletableFuture.supplyAsync(() ->
+                jpaApi.withTransaction(em -> {
+                    TypedQuery<Post> query = em.createQuery("select p from Post p", Post.class);
+                    return query.getResultList();
+                })
+        );
     }
 
     @Override
@@ -38,7 +42,7 @@ public class PostRepositoryImpl implements PostRepository {
     @Override
     public Post createPost(PostForm postForm) {
         Post post = new Post(null, postForm.getTitle(), postForm.getContent());
-        jpaApi.withTransaction(em->{
+        jpaApi.withTransaction(em -> {
             em.persist(post);
         });
         return post;

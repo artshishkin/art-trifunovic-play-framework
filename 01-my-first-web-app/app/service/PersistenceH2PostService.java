@@ -7,6 +7,7 @@ import model.PostRepository;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.concurrent.CompletionStage;
 
 public class PersistenceH2PostService implements PostService {
 
@@ -18,7 +19,7 @@ public class PersistenceH2PostService implements PostService {
     }
 
     @Override
-    public List<Post> getPosts() {
+    public CompletionStage<List<Post>> getPosts() {
         return postRepository.getAll();
     }
 

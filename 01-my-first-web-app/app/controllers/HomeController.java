@@ -6,6 +6,7 @@ import model.Post;
 import play.data.Form;
 import play.data.FormFactory;
 import play.libs.Json;
+import play.libs.concurrent.HttpExecutionContext;
 import play.mvc.Controller;
 import play.mvc.Http;
 import play.mvc.Result;
@@ -14,6 +15,8 @@ import service.PostService;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.CompletableFuture;
+import java.util.concurrent.CompletionStage;
 
 /**
  * This controller contains an action to handle HTTP requests
@@ -23,11 +26,13 @@ public class HomeController extends Controller {
 
     private final PostService postService;
     private final FormFactory formFactory;
+    private final HttpExecutionContext httpExecutionContext;
 
     @Inject
-    public HomeController(PostService postService, FormFactory formFactory) {
+    public HomeController(PostService postService, FormFactory formFactory, HttpExecutionContext httpExecutionContext) {
         this.postService = postService;
         this.formFactory = formFactory;
+        this.httpExecutionContext = httpExecutionContext;
     }
 
     /**
@@ -40,20 +45,26 @@ public class HomeController extends Controller {
         return ok(views.html.index.render());
     }
 
-    public Result getPosts(Integer postId, Http.Request request) {
-
-        List<Post> posts;
+    public CompletionStage<Result> getPosts(Integer postId, Http.Request request) {
+        CompletionStage<List<Post>> postsFuture;
         if (postId == null) {
-            posts = postService.getPosts();
+            postsFuture = postService.getPosts();
 
         } else {
-            posts = postService.getPost(postId)
+            postsFuture = CompletableFuture.supplyAsync(() -> postService.getPost(postId)
                     .map(List::of)
-                    .orElse(Collections.emptyList());
+                    .orElse(Collections.emptyList())
+            );
         }
-        return ok(views.html.posts.render(posts,
-                formFactory.form(PostForm.class),
-                request));
+        return postsFuture.thenApplyAsync(posts -> ok(
+                        views.html.posts.render(
+                                posts,
+                                formFactory.form(PostForm.class),
+                                request
+                        )
+                ),
+                httpExecutionContext.current()
+        );
     }
 
     public Result getPostsJson() {
@@ -65,7 +76,7 @@ public class HomeController extends Controller {
         Form<PostForm> boundForm = formFactory.form(PostForm.class).bindFromRequest(request);
 
         if (boundForm.hasErrors()) {
-            return badRequest(views.html.posts.render(postService.getPosts(), boundForm, request));
+            return badRequest(views.html.posts.render(List.of(), boundForm, request));
         }
 
         PostForm postData = boundForm.get();
