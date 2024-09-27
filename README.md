@@ -7,6 +7,14 @@
 
 ---
 
+### Section 1: Introduction
+
+---
+
+### Section 2: Getting Ready
+
+---
+
 ### Section 3: My First WebApp
 
 #### 6. Create Play Project from Template
@@ -45,6 +53,52 @@ Error Navigation
     - Open build.sbt ->
     - fork := true // required for "sbt run" to pick up javaOptions
     - javaOptions += "-Dplay.editor=http://localhost:63342/api/file/?file=%s&line=%s"
+
+---
+
+### Section 4: SBT Basics
+
+---
+
+### Section 5: Twirl Templates
+
+---
+
+### Section 6: Forms
+
+---
+
+### Section 7: Database
+
+#### 24. Configure h2
+
+1. Configure connection in [application.conf](01-my-first-web-app/conf/application.conf)
+2. Start h2 console:
+    - in the module folder run bash command
+    - `sbt`
+    - `h2-browser`
+    - default browser should be opened automatically with the `h2-console`
+    - check and update `JDBC URL:`, `User Name:`
+    - enter password
+    - press `Test connection`
+    - in case of error:
+        - similar
+          to `Database "C:/Users/.../01-my-first-web-app/db_file" not found, either pre-create it or allow remote database creation (not recommended in secure environments) [90149-232] 90149/90149 `
+        - follow step 3
+    - if `Test connection` is successful press `Connect`
+3. Pre-create database file (Optional - in case of failure in step 2)
+    - into the module/project folder copy
+      - h2 jar file from local Maven repository  
+        - Ex.: from `~/.m2/repository/com/h2database/h2/2.2.224/h2-2.2.224.jar`
+      - **or** 
+      - download JAR from the [official website](https://www.h2database.com/html/download.html)
+    - in the terminal run command `java -cp .\h2-2.3.232.jar org.h2.tools.Shell` (modify according to your version)
+    - provide URL: `jdbc:h2:./db_file` (it will create file `db_file.db.mv` in the current directory)
+    - enter Name, the desired Password and the password confirmation
+    - it will open sql cli
+    - file `db_file.db.mv` will be created in the current directory
+    - exit
+    - follow the Step 2
 
 [licence]: https://img.shields.io/github/license/artshishkin/art-trifunovic-play-framework.svg
 

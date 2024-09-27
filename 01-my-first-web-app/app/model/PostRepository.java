@@ -1,19 +1,19 @@
-package service;
+package model;
 
 import com.google.inject.ImplementedBy;
 import form.PostForm;
-import model.Post;
 
 import java.util.List;
 import java.util.Optional;
 import java.util.concurrent.CompletionStage;
 
-@ImplementedBy(PersistenceH2PostService.class)
-public interface PostService {
+@ImplementedBy(PostRepositoryImpl.class)
+public interface PostRepository {
 
-    CompletionStage<List<Post>> getPosts();
+    CompletionStage<List<Post>> getAll();
 
-    Optional<Post> getPost(int postId);
+    Optional<Post> findById(int postId);
 
     Post createPost(PostForm postForm);
+
 }

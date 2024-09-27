@@ -41,3 +41,4 @@ build/
 .vscode/
 
 node_modules/
+db_file.*.db

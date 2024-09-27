@@ -6,6 +6,8 @@ import model.Post;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.concurrent.CompletableFuture;
+import java.util.concurrent.CompletionStage;
 
 public class ListStoragePostService implements PostService {
 
@@ -17,8 +19,8 @@ public class ListStoragePostService implements PostService {
     );
 
     @Override
-    public List<Post> getPosts() {
-        return posts;
+    public CompletionStage<List<Post>> getPosts() {
+        return CompletableFuture.completedFuture(posts);
     }
 
     @Override
